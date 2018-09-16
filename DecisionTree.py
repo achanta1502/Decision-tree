@@ -271,7 +271,7 @@ def classify(row, node):
 
     # Base case: we've reached a leaf
     if isinstance(node, Leaf):
-        return node.predictions
+        return node.predictions.keys()
 
     # Decide whether to follow the true-branch or the false-branch.
     # Compare the feature / value stored in the node,
@@ -288,22 +288,22 @@ def print_tree(node, spacing=""):
     # Base case: we've reached a leaf
     if isinstance(node, Leaf):
         print(spacing + "Predict", node.predictions)
-        print("Leaf id ", Leaf.id)
-        print("Leaf depth", Leaf.depth)
+        print("Leaf id ", node.id)
+        print("Leaf depth", node.depth)
         print("The class labels are:")
-        for i in Leaf.predictions:
-            print(i+":"+Leaf.predictions[i])
+        for i in node.predictions:
+            print(i+":"+str(node.predictions[i]))
         return
 
     # Print the question at this node
-    print (spacing + str(node.question))
+    print(spacing + str(node.question))
 
     # Call this function recursively on the true branch
-    print (spacing + '--> True:')
+    print(spacing + '--> True:')
     print_tree(node.true_branch, spacing + "  ")
 
     # Call this function recursively on the false branch
-    print (spacing + '--> False:')
+    print(spacing + '--> False:')
     print_tree(node.false_branch, spacing + "  ")
 
 
@@ -319,12 +319,16 @@ def print_leaf(counts):
 
 
 ## TODO: Step 5
-def getLeafNodes(node, leafNodes =[]):
+def getLeafNodes(node, leafNodes = []):
 
     # Returns a list of all leaf nodes of a tree
+    if node.true_branch is None and node.false_branch is None:
+        print("each leaf nodes", leafNodes)
+        leafNodes.append(node)
 
-
-
+    else:
+        getLeafNodes(node.true_branch, leafNodes)
+        getLeafNodes(node.false_branch, leafNodes)
     return leafNodes
 
 
@@ -334,14 +338,18 @@ def getInnerNodes(node, innerNodes =[]):
 
 
 
-    # getInnerNodes(node.true_branch, innerNodes.append(node))
-
-    return innerNodes
+   return innerNodes
 
 
 ## TODO: Step 6
 def computeAccuracy(rows, node):
 
+    totalRows = len(rows)
+    numAccurate = 0
 
-    return 0
+    for row in rows:
+        predicted_label = classify(row, node)
+
+
+    return numAccurate/totalRows
 

@@ -1,4 +1,4 @@
-from src.DecisionTree import *
+from DecisionTree import *
 import pandas as pd
 from sklearn import model_selection
 

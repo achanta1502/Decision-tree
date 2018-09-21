@@ -248,12 +248,12 @@ def prune_tree(node, prunedList):
     for the base case (no further information gain). 3) Prepare for
     giant stack traces.
     """
-
     # Base case: we've reached a leaf
     if isinstance(node, Leaf):
         return node
     # If we reach a pruned node, make that node a leaf node and return. Since it becomes a leaf node, the nodes
     # below it are automatically not considered
+
     if int(node.id) in prunedList:
         return Leaf(node.rows, node.id, node.depth)
 
@@ -288,15 +288,17 @@ def print_tree(node, spacing=""):
     # Base case: we've reached a leaf
     if isinstance(node, Leaf):
         print(spacing + "Predict", node.predictions)
-        print("Leaf id ", node.id)
-        print("Leaf depth", node.depth)
-        print("The class labels are:")
+        print(spacing + "Leaf id ", node.id)
+        print(spacing + "Leaf depth", node.depth)
+        print(spacing + "The class labels are:")
         for i in node.predictions:
-            print(i+":"+str(node.predictions[i]))
+            print(spacing + i+":"+str(node.predictions[i]))
         return
 
     # Print the question at this node
     print(spacing + str(node.question))
+    print(spacing + "Node id " + str(node.id))
+    print(spacing + "Node depth " + str(node.depth))
 
     # Call this function recursively on the true branch
     print(spacing + '--> True:')
@@ -322,10 +324,10 @@ def print_leaf(counts):
 def getLeafNodes(node, leafNodes = []):
 
     # Returns a list of all leaf nodes of a tree
-    if isinstance(node,Leaf):
+    if isinstance(node, Leaf):
         leafNodes.append(node)
     else:    
-        getLeafNodes(node.true_branch,leafNodes)+getLeafNodes(node.false_branch,leafNodes)
+        getLeafNodes(node.true_branch, leafNodes) + getLeafNodes(node.false_branch, leafNodes)
     return leafNodes
     
 
@@ -333,14 +335,13 @@ def getLeafNodes(node, leafNodes = []):
 def getInnerNodes(node, innerNodes =[]):
 
     # Returns a list of all non-leaf nodes of a tree
-
     if node:
         innerNodes.append(node)
-    if isinstance(node,Leaf):
+    if isinstance(node, Leaf):
         innerNodes.remove(node)   
-    if not isinstance(node,Leaf):
-         getInnerNodes(node.true_branch,innerNodes)
-         getInnerNodes(node.false_branch,innerNodes)
+    if not isinstance(node, Leaf):
+        getInnerNodes(node.true_branch, innerNodes)
+        getInnerNodes(node.false_branch, innerNodes)
 
     return innerNodes
 
@@ -353,8 +354,8 @@ def computeAccuracy(rows, node):
 
     for row in rows:
         predicted_label = classify(row, node)
-       
         if row[-1] in predicted_label:
-            numAccurate=numAccurate+1
-    return numAccurate/totalRows
+            numAccurate = numAccurate + 1
+
+    return round(numAccurate/totalRows, 2)
 

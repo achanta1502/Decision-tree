@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn import model_selection
 
 header = ['SepalL', 'SepalW', 'PetalL', 'PetalW', 'Class']
-df = pd.read_csv('https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data', header=None, names=['SepalL','SepalW','PetalL','PetalW','Class'])
+df = pd.read_csv('https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/d546eaee765268bf2f487608c537c05e22e4b221/iris.csv', header=None, names=['SepalL','SepalW','PetalL','PetalW','Class'])
 lst = df.values.tolist()
 t = build_tree(lst, header)
 print_tree(t)

@@ -229,10 +229,10 @@ def build_tree(rows, header, depth=0, id=0):
     true_rows, false_rows = partition(rows, question)
 
     # Recursively build the true branch.
-    true_branch = build_tree(true_rows, header, depth + 1, 2 * id + 2 )
+    true_branch = build_tree(true_rows, header, depth + 1, 2 * (depth+1) + 2 )
 
     # Recursively build the false branch.
-    false_branch = build_tree(false_rows, header, depth + 1, 2 * id + 1)
+    false_branch = build_tree(false_rows, header, depth + 1, 2 * (depth+1) + 1)
 
     # Return a Question node.
     # This records the best feature / value to ask at this point,
@@ -322,23 +322,27 @@ def print_leaf(counts):
 def getLeafNodes(node, leafNodes = []):
 
     # Returns a list of all leaf nodes of a tree
-    if node.true_branch is None and node.false_branch is None:
-        print("each leaf nodes", leafNodes)
+    if isinstance(node,Leaf):
         leafNodes.append(node)
-
-    else:
-        getLeafNodes(node.true_branch, leafNodes)
-        getLeafNodes(node.false_branch, leafNodes)
+    else:    
+        getLeafNodes(node.true_branch,leafNodes)+getLeafNodes(node.false_branch,leafNodes)
     return leafNodes
+    
 
 
 def getInnerNodes(node, innerNodes =[]):
 
     # Returns a list of all non-leaf nodes of a tree
 
+    if node:
+        innerNodes.append(node)
+    if isinstance(node,Leaf):
+        innerNodes.remove(node)   
+    if not isinstance(node,Leaf):
+         getInnerNodes(node.true_branch,innerNodes)
+         getInnerNodes(node.false_branch,innerNodes)
 
-
-   return innerNodes
+    return innerNodes
 
 
 ## TODO: Step 6
@@ -349,7 +353,8 @@ def computeAccuracy(rows, node):
 
     for row in rows:
         predicted_label = classify(row, node)
-
-
+       
+        if row[-1] in predicted_label:
+            numAccurate=numAccurate+1
     return numAccurate/totalRows
 

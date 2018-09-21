@@ -17,7 +17,7 @@ innerNodes = getInnerNodes(t)
 for inner in innerNodes:
     print("id = " + str(inner.id) + " depth =" + str(inner.depth))
 
-trainDF, testDF = model_selection.train_test_split(df, test_size=0.2)
+trainDF, testDF = model_selection.train_test_split(df, test_size=0.3)
 train = trainDF.values.tolist()
 test = testDF.values.tolist()
 
@@ -28,7 +28,7 @@ acc = computeAccuracy(test, t)
 print("Accuracy on test = " + str(acc))
 
 ## TODO: You have to decide on a pruning strategy
-t_pruned = prune_tree(t, [26, 11, 5])
+t_pruned = prune_tree(t, [19,21,34,35,36,37,38])
 
 print("*************Tree after pruning*******")
 print_tree(t_pruned)

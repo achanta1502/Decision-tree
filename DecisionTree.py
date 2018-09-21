@@ -126,7 +126,7 @@ def info_gain(left, right, current_uncertainty):
     p = float(len(left)) / (len(left) + len(right))
 
     ## TODO: Step 3, Use Entropy in place of Gini
-    return current_uncertainty - entropy(left) - entropy(right)
+    return current_uncertainty - p*entropy(left) - (1-p)*entropy(right)
 
 
 def find_best_split(rows, header):

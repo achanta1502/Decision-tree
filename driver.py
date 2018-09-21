@@ -28,7 +28,7 @@ acc = computeAccuracy(test, t)
 print("Accuracy on test = " + str(acc))
 
 ## TODO: You have to decide on a pruning strategy
-t_pruned = prune_tree(t, [19, 21, 34, 35, 36, 37, 38])
+t_pruned = prune_tree(t, [19, 34, 35, 36, 37, 38])
 
 print("*************Tree after pruning*******")
 print_tree(t_pruned)

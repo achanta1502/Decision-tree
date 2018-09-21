@@ -229,7 +229,7 @@ def build_tree(rows, header, depth=0, id=0):
     true_rows, false_rows = partition(rows, question)
 
     # Recursively build the true branch.
-    true_branch = build_tree(true_rows, header, depth + 1, 2 * (depth+1) + 2 )
+    true_branch = build_tree(true_rows, header, depth + 1, 2 * (depth+1) + 2)
 
     # Recursively build the false branch.
     false_branch = build_tree(false_rows, header, depth + 1, 2 * (depth+1) + 1)

@@ -38,7 +38,8 @@ for j in leaves:
 arrayOfNodes = []
 for i in range(0, 7):
     a = random.choice(nodesList)
-    arrayOfNodes.append(a)
+    if a not in arrayOfNodes:
+        arrayOfNodes.append(a)
 
 print("*************Nodes used for pruning*******")
 print(arrayOfNodes)

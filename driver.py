@@ -1,6 +1,7 @@
 from DecisionTree import *
 import pandas as pd
 from sklearn import model_selection
+import random
 
 header = ['SepalL', 'SepalW', 'PetalL', 'PetalW', 'Class']
 df = pd.read_csv('https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/d546eaee765268bf2f487608c537c05e22e4b221/iris.csv', header=None, names=['SepalL', 'SepalW', 'PetalL', 'PetalW', 'Class'])
@@ -28,7 +29,19 @@ acc = computeAccuracy(test, t)
 print("Accuracy on test = " + str(acc))
 
 ## TODO: You have to decide on a pruning strategy
-t_pruned = prune_tree(t, [19, 34, 35, 36, 37, 38])
+nodesList = []
+for i in innerNodes:
+    nodesList.append(i.id)
+for j in leaves:
+    nodesList.append(j.id)
+
+arrayOfNodes = []
+for i in range(0, 7):
+    a = random.choice(nodesList)
+    arrayOfNodes.append(a)
+
+print(arrayOfNodes)
+t_pruned = prune_tree(t, arrayOfNodes)
 
 print("*************Tree after pruning*******")
 print_tree(t_pruned)

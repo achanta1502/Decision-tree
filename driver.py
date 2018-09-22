@@ -40,9 +40,9 @@ for i in range(0, 7):
     a = random.choice(nodesList)
     arrayOfNodes.append(a)
 
+print("*************Nodes used for pruning*******")
 print(arrayOfNodes)
 t_pruned = prune_tree(t, arrayOfNodes)
-
 print("*************Tree after pruning*******")
 print_tree(t_pruned)
 acc = computeAccuracy(test, t)
